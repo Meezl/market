@@ -14,7 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/item', function (){
+   return view('frontend.products.index');
+});
 Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 Route::resource('products', 'ProductController');
@@ -22,3 +24,7 @@ Route::resource('permissions','PermissionController');
 Route::resource('countries','CountryController');
 Route::resource('categories','CategoryController');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
