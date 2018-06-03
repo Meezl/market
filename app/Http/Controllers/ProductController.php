@@ -56,6 +56,7 @@ class ProductController extends Controller
             $product->name = $request['name'];
             $product->price = $request['price'];
             $product->description = $request['description'];
+            $product->town = $request['town'];
             $category = Category::where('name', $request['category'])->get();
             $product->category_id = $category->id;
             $product->user_id = Auth::user()->id;
@@ -119,6 +120,7 @@ class ProductController extends Controller
             $product->name = $request['name'];
             $product->price = $request['price'];
             $product->description = $request['description'];
+            $product->town = $request['town'];
             $category = Category::where('name', $request['category'])->get();
             $product->category_id = $category->id;
             $product->user_id = Auth::user()->id;

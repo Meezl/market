@@ -19,13 +19,17 @@ class CreateProductsTable extends Migration
             $table->double('price');
             $table->text('description');
             $table->string('image');
-            $table->integer('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('country_id')->nullable();
-            $table->foreign('country_id')->references('id')->on('countries');
+            $table->string('town');
+            $table->integer('user_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+           $table->integer('country_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('products', function($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 
