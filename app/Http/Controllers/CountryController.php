@@ -14,7 +14,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.countries.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.countries.create');
     }
 
     /**
@@ -35,51 +35,63 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $country = new Country();
+        $country->name = $request['name'];
+        $country->save();
+
+        return redirect()->route('countries.index')->with(['Success' => 'Country Added!' ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show($id)
     {
-        //
+        $country = Country::find($id);
+        return view('backend.countries.show', compact('country'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
-        //
+        $country = Country::find($id);
+        return view('backend.countries.edit', compact('country'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country  $country
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request, $id)
     {
-        //
+        $country = Country::find($id);
+        $country->update($request->all());
+
+        return redirect()->route('countries.index')->with(['Success' => 'Country Updated']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country  $country
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        //
+        $country = Country::find($id);
+        $country->delete();
+
+        return redirect()->route('countries.index')->with(['Success' => 'Country Deleted!']);
     }
 }
