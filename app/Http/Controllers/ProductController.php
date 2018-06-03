@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Project;
 
@@ -103,9 +102,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        if (Auth::check()){
-            return view('backend.products.edit', compact('product'));
-        }
+        return view('backend.products.edit', compact('product'));
     }
 
     /**
@@ -119,9 +116,28 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         if (Auth::check()){
-            $inputs = $request->all();
-            $product->update($inputs);
+            $product->name = $request['name'];
+            $product->price = $request['price'];
+            $product->description = $request['description'];
+            $category = Category::where('name', $request['category'])->get();
+            $product->category_id = $category->id;
+            $product->user_id = Auth::user()->id;
+            $country = Country::where('name',$request['country'])->get();
+            $product->country_id = $country->id;
+
+            if($request->hasFile('image')) {
+
+                $file = $request->file('image');
+
+                $destination_path = 'images/products';
+                $name = $file->getClientOriginalName();
+                $file->move($destination_path, $name);
+
+                $product->image = $name;
+            }
         }
+
+        $product->update();
 
         return redirect()->route('products.index')->with(['Success' => 'Product Updated']);
     }
