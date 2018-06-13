@@ -1,137 +1,169 @@
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-
-    <title>Marketplace</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-</head>
-
-<body>
-
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Marketplace</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
-    </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
-</div>
-
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Pricing</h1>
-    <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
-</div>
-
+@extends('layouts.soko')
+@section('content')
+<!-- Page Content -->
 <div class="container">
-    <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Free</h4>
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4 logo"><img src="/soko/images/logo.png" alt=""></h1>
+            <div class="list-group">
+                {!! Form::open(['class' => 'form-inline ' , 'role' => 'form', 'method' => 'GET' , 'route' => 'search']) !!}
+
+                <div class="form-group"style="margin-bottom: 10px; ">
+                {!! Form::text('name', null, ['placeholder' => 'Search for Product...', 'class' => 'form-control' , 'style' => 'width: 255px;']) !!}
+                <!--<input type="text" name="Domain_Name" id="Domain_Name" class="form-control" placeholder="Domain Name">-->
+                {!! Form::close() !!}
+                </div>
+                <a href="#" class="list-group-item">Horticulture</a>
+                <a href="#" class="list-group-item">Animal Husbandry</a>
+                <a href="#" class="list-group-item">Farm Inputs & Services</a>
             </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 GB of storage</li>
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-            </div>
+
         </div>
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Pro</h4>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
+                        <img class="d-block img-fluid" src="/soko/images/market.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block img-fluid" src="/soko/images/celery1.jpg" alt="Second slide">
+                    </div>
+                    <!--<div class="carousel-item">
+                        <img class="d-block img-fluid" src="/soko/images/cf.jpg" alt="Third slide">
+                    </div> -->
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>20 users included</li>
-                    <li>10 GB of storage</li>
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+
+            <div class="row">
+                @foreach($products as $product)
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="/images/products/{{$product->image}}" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="/products/{{ $product->id }}">{{ $product->name }}</a>
+                            </h4>
+                            <h5>Price: Ksh. {{ $product->price }}</h5>
+                            <h5>Location: {{ $product->town }}</h5>
+                            <p class="card-text">{{ $product->description }}</p>
+                            <h6>Contacts: {{ $product->user->phone_number }} or {{ $product->user['email'] }}</h6>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Two</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Three</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Four</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Five</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Six</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+                    {{ $products->links() }}
             </div>
+            <!-- /.row -->
+
         </div>
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Enterprise</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>30 users included</li>
-                    <li>15 GB of storage</li>
-                    <li>Phone and email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
-            </div>
-        </div>
+        <!-- /.col-lg-9 -->
+
     </div>
+    <!-- /.row -->
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-                <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Cool stuff</a></li>
-                    <li><a class="text-muted" href="#">Random feature</a></li>
-                    <li><a class="text-muted" href="#">Team feature</a></li>
-                    <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                    <li><a class="text-muted" href="#">Another one</a></li>
-                    <li><a class="text-muted" href="#">Last time</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Resource</a></li>
-                    <li><a class="text-muted" href="#">Resource name</a></li>
-                    <li><a class="text-muted" href="#">Another resource</a></li>
-                    <li><a class="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Team</a></li>
-                    <li><a class="text-muted" href="#">Locations</a></li>
-                    <li><a class="text-muted" href="#">Privacy</a></li>
-                    <li><a class="text-muted" href="#">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
 </div>
+<!-- /.container -->
+@endsection
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="/bootstrap/js/bootstrap.js"></script>
-<script>
-    Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-    });
-</script>
-</body>
-</html>

@@ -1,1 +1,32 @@
-/* your styles go here */
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(255, 255, 255) !important;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff !important;
+    background-color: #339900 !important;
+    border-color: #339900 !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #339900;
+    border-color: #339900;
+}
+.btn-link:hover {
+    color: #480509;
+    background-color: transparent;
+}
+.btn-link {
+    font-weight: 450;
+    color: #339900;
+    background-color: transparent;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #339900 !important;
+    border-color: #339900 !important;
+}

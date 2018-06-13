@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('products.index');
 });
 Route::get('/item', function (){
    return view('frontend.products.index');
@@ -23,7 +23,7 @@ Route::resource('products', 'ProductController');
 Route::resource('permissions','PermissionController');
 Route::resource('countries','CountryController');
 Route::resource('categories','CategoryController');
-
+Route::get('/search', ['uses' => 'ProductController@search', 'as' => 'search']);
 
 Auth::routes();
 

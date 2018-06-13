@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Auth;
 
 class CountryController extends Controller
 {
@@ -14,7 +15,8 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return view('backend.countries.index');
+        $countries = Country::all();
+        return view('backend.countries.index', compact('countries'));
     }
 
     /**

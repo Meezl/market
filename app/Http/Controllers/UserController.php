@@ -57,7 +57,7 @@ class UserController extends Controller
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->password = $request['password'];
-
+        $user->phone_number = $request['phone_number'];
 
         if($request->hasFile('image')) {
 

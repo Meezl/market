@@ -6,7 +6,8 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Project;
+use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -17,16 +18,17 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
         if (Auth::check()){
             $user = Auth::user();
-            $products = Product::where('user_id', $user->name)->get();
+            $products = Product::where('user_id', $user->id)->get();
 
             return view('backend.products.index', compact('products'));
-        }else if(Auth::user()->id == 1) {
+        }else if(Auth::check() && Auth::user()->id == 1) {
             $products = Product::all();
             return view('backend.products.index', compact('products'));
         }else {
-            $products = Product::all();
+            $products = Product::paginate(9);
             return view('frontend.products.index', compact('products'));
         }
     }
@@ -38,8 +40,12 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $countries = Country::all();
+        $categories = Category::all();
         if (Auth::check()){
-            return view('backend.products.create');
+            return view('backend.products.create', ['countries' => $countries, 'categories' => $categories]);
+        }else {
+            return redirect()->route('products.index');
         }
     }
 
@@ -52,16 +58,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         if(Auth::check()){
+            /* $request->validate( [
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|max:255',
+                'description' => 'required|string|min:6|max:255',
+                'phone_number' => 'required|string|min:6',
+            ]);*/
+
             $product = new Product();
             $product->name = $request['name'];
             $product->price = $request['price'];
             $product->description = $request['description'];
             $product->town = $request['town'];
-            $category = Category::where('name', $request['category'])->get();
-            $product->category_id = $category->id;
+            $product->category_id = $request['category'];
             $product->user_id = Auth::user()->id;
-            $country = Country::where('name',$request['country'])->get();
-            $product->country_id = $country->id;
+            $product->country_id = $request['country'];
 
             if($request->hasFile('image')) {
 
@@ -74,8 +85,11 @@ class ProductController extends Controller
                 $product->image = $name;
             }
             $product->save();
+            return redirect()->route('products.index')->with(['Success' => 'Product Added!']);
+        }else {
+            return redirect()->route('products.index');
         }
-        return redirect()->route('products.index')->with(['Success' => 'Product Added!']);
+
     }
 
     /**
@@ -103,7 +117,11 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('backend.products.edit', compact('product'));
+        if (Auth::check()) {
+            return view('backend.products.edit', compact('product'));
+        }else {
+            return view('frontend.products.show', compact('product'));
+        }
     }
 
     /**
@@ -137,11 +155,14 @@ class ProductController extends Controller
 
                 $product->image = $name;
             }
+            $product->update();
+
+            return redirect()->route('products.index')->with(['Success' => 'Product Updated']);
+        }else {
+            return redirect()->route('products.index');
         }
 
-        $product->update();
 
-        return redirect()->route('products.index')->with(['Success' => 'Product Updated']);
     }
 
     /**
@@ -158,5 +179,11 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with(['Success' => 'Product Deleted!']);
+    }
+
+    public function search(Request $request){
+        $name = $request['name'];
+        $products = Product::where('name', 'like', '%' . $name . '%')->paginate(6);
+        return view('frontend.products.index', compact('products'));
     }
 }

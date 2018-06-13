@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('backend.categories.index');
+        $categories = Category::all();
+        return view('backend.categories.index', compact('categories'));
     }
 
     /**
@@ -39,7 +40,7 @@ class CategoryController extends Controller
         $category->name = $request['name'];
         $category->save();
 
-        return redirect()->route('backend.categories.index');
+        return redirect()->route('categories.index');
     }
 
     /**

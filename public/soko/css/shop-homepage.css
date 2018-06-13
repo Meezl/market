@@ -1,0 +1,67 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+body {
+  padding-top: 54px;
+}
+.bg-dark {
+  background-color: #339900!important;
+}
+.text-white a {
+  color: #fff;
+}
+
+.logo img {
+  height: 3em;
+}
+.list-group a:hover {
+  color: #339900 !important;
+  text-decoration: none !important;
+}
+.card-title a {
+  color: #480509 !important;
+}
+.card-title a:hover {
+  color: #339900 !important;
+  text-decoration: none !important
+}
+.navbar-dark .navbar-brand a:hover {
+  color: #fff !important;
+}
+.list-group a {
+  color: #480509 !important;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff !important;
+  background-color: #339900 !important;
+  border-color: #339900 !important;
+}
+.page-link:hover {
+  z-index: 2;
+  color: #339900 !important;
+  text-decoration: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #480509 !important;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
